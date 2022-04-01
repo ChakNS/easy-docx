@@ -16,7 +16,7 @@ const TAG_MAP = {
   template: TEMPLATE,
 }
 
-async function componentConfFactory(tagData: { tag: Symbol, text?: string, attrs?: StringOrObject, children: ConfigType[] }) {
+async function componentConfFactory(tagData: { tag: Symbol | string, text?: string, attrs?: StringOrObject, children: ConfigType[] }) {
   let result = {
     type: TAG_MAP[tagData.tag.toString()],
     children: (await syncMap(tagData.children, item => toComponentConf(item))).filter(item => item),
@@ -43,7 +43,8 @@ async function componentConfFactory(tagData: { tag: Symbol, text?: string, attrs
   return result
 }
 
-async function toComponentConf(tagData: { tag: Symbol, text?: string, atts?: StringOrObject, children: ConfigType[] }, rootTag?: Symbol) {
+async function toComponentConf(tagData: { tag: Symbol | string, text?: string, atts?: StringOrObject, children: ConfigType[] }, rootTag?: Symbol) {
+  tagData.tag = tagData.tag || ''
   let result = null
 
   if (typeof rootTag !== 'undefined' && tagData.tag === rootTag) {

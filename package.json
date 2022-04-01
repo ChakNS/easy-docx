@@ -3,10 +3,13 @@
   "description": "To generate .docx files on front-end by tag template.",
   "version": "1.0.0",
   "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
+      "global": "./dist/index.global.js",
       "types": "./dist/index.d.ts"
     }
   },
@@ -26,7 +29,7 @@
   "scripts": {
     "update:packages": "npm update --save-dev && npm update --save",
     "dev": "npm run build -- --watch src",
-    "build": "tsup src/index.ts --dts --format esm --clean",
+    "build": "tsup src/index.ts --dts --format esm,iife --clean",
     "release": "npx git-ensure -a && npx bumpp --commit --tag --push && npm publish",
     "prepublishOnly": "npm run build"
   },
